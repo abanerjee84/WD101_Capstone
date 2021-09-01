@@ -1,0 +1,715 @@
+REPO NAME,REPO OWNER,PR.NO,AUTHOR,TITLE,DATE,COMMENT,LEVEL
+keras,keras-team,15161,copybara-service[bot],"public no-op, only modifies a BUILD visibility rule.",2021-08-13T00:19:17Z,"public no-op, only modifies a BUILD visibility rule.
+",0
+scikit-learn,scikit-learn,20739,jjerphan,MNT Removing Cython compilation warnings in WeightVector template,2021-08-11T16:01:11Z,"<!--
+Thanks for contributing a pull request! Please ensure you have taken a look at
+the contribution guidelines: https://github.com/scikit-learn/scikit-learn/blob/main/CONTRIBUTING.md
+-->
+
+#### Reference Issues/PRs
+<!--
+Example: Fixes #1234. See also #3456.
+Please use keywords (e.g., Fixes) to create link to the issues or pull requests
+you resolved, so that they will automatically be closed when your pull request
+is merged. See https://github.com/blog/1506-closing-issues-via-pull-requests
+-->
+
+Fixup for #20481 
+
+#### What does this implement/fix? Explain your changes.
+
+Cython raises a warning at compile time because the `WeightVector` template imports `sqrt` from `libc.math` twice with different signatures.
+
+This import `sqrt` once, removing the warning.
+
+#### Any other comments?
+
+Shouldn't we be stricter and we make the CI fail on Cython (but not on C or C++) compilation warnings?
+
+
+<!--
+Please be aware that we are a loose team of volunteers so patience is
+necessary; assistance handling other issues is very welcome. We value
+all user contributions, no matter how minor they are. If we are slow to
+review, either the pull request needs some benchmarking, tinkering,
+convincing, etc. or more likely the reviewers are simply busy. In either
+case, we ask for your understanding during the review process.
+For more information, see our FAQ on this topic:
+http://scikit-learn.org/dev/faq.html#why-is-my-pull-request-not-getting-any-attention.
+
+Thanks for contributing!
+-->
+",0
+scikit-learn,scikit-learn,20739,lorentzenchr,MNT Removing Cython compilation warnings in WeightVector template,2021-08-12T15:36:59Z,"```suggestion
+```",2
+scikit-learn,scikit-learn,20739,thomasjpfan,MNT Removing Cython compilation warnings in WeightVector template,2021-08-13T01:20:58Z,"The profiling and linetracing is false by default.
+
+```suggestion
+# cython: initializedcheck=False
+# cython: binding=False
+```
+
+Is `binding=False` required here?
+
+",2
+scikit-learn,scikit-learn,20739,thomasjpfan,MNT Removing Cython compilation warnings in WeightVector template,2021-08-13T01:23:21Z,"I do not think we need to import sqrt here.
+
+```suggestion
+```",2
+scikit-learn,scikit-learn,20739,thomasjpfan,MNT Removing Cython compilation warnings in WeightVector template,2021-08-13T01:48:22Z,"Hmm we do set language_level globally here:
+
+https://github.com/scikit-learn/scikit-learn/blob/21eb4686c5a53401b10e815d2f08ef8f090283e1/sklearn/_build_utils/__init__.py#L79
+
+but it is a little nicer to set it explicitly.",2
+scikit-learn,scikit-learn,20739,jjerphan,MNT Removing Cython compilation warnings in WeightVector template,2021-08-13T06:42:54Z,"The purpose of setting directives explicitly for files is that it allows generating code for given file (using `cythonize` for instance), but they aren't needed.
+
+We should probably remove them anyway, yes.
+
+The `binding` directive is `False` by default but will change to `True` in Cython 3 according to [the docs](https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives).",2
+scikit-learn,scikit-learn,20739,jjerphan,MNT Removing Cython compilation warnings in WeightVector template,2021-08-13T06:46:19Z,"If it is relevant setting `binding`'s value, it's probably better to do so  in `scikit-learn/sklearn/_build_utils/__init__.py `.",2
+scikit-learn,scikit-learn,20739,jjerphan,MNT Removing Cython compilation warnings in WeightVector template,2021-08-13T06:47:22Z,"As per indicated in the other thread, it helps generating code for this file solely if needed, but probably this should be removed.",2
+PythonDataScienceHandbook,jakevdp,305,dependabot[bot],Bump pillow from 3.4.2 to 8.2.0,2021-06-08T19:13:31Z,"Bumps [pillow](https://github.com/python-pillow/Pillow) from 3.4.2 to 8.2.0.
+<details>
+<summary>Release notes</summary>
+<p><em>Sourced from <a href=""https://github.com/python-pillow/Pillow/releases"">pillow's releases</a>.</em></p>
+<blockquote>
+<h2>8.2.0</h2>
+<p><a href=""https://pillow.readthedocs.io/en/stable/releasenotes/8.2.0.html"">https://pillow.readthedocs.io/en/stable/releasenotes/8.2.0.html</a></p>
+<h2>Changes</h2>
+<ul>
+<li>Security fixes for 8.2.0 <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5377"">#5377</a> [<a href=""https://github.com/hugovk""><code>@​hugovk</code></a>]</li>
+<li>Move getxmp() to JpegImageFile <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5376"">#5376</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Added getxmp() method <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5144"">#5144</a> [<a href=""https://github.com/UrielMaD""><code>@​UrielMaD</code></a>]</li>
+<li>Compile LibTIFF with CMake on Windows <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5359"">#5359</a> [<a href=""https://github.com/nulano""><code>@​nulano</code></a>]</li>
+<li>Add ImageShow support for GraphicsMagick <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5349"">#5349</a> [<a href=""https://github.com/latosha-maltba""><code>@​latosha-maltba</code></a>]</li>
+<li>Tiff crash fixes in TiffDecode.c <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5372"">#5372</a> [<a href=""https://github.com/wiredfool""><code>@​wiredfool</code></a>]</li>
+<li>Remove redundant check (addition to <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5364"">#5364</a>) <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5366"">#5366</a> [<a href=""https://github.com/kkopachev""><code>@​kkopachev</code></a>]</li>
+<li>Do not load transparent pixels from subsequent GIF frames <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5333"">#5333</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Use LZW encoding when saving GIF images <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5291"">#5291</a> [<a href=""https://github.com/raygard""><code>@​raygard</code></a>]</li>
+<li>Set all transparent colors to be equal in quantize() <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5282"">#5282</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Allow PixelAccess to use Python <strong>int</strong> when parsing x and y <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5206"">#5206</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Removed Image._MODEINFO <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5316"">#5316</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Add preserve_tone option to autocontrast <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5350"">#5350</a> [<a href=""https://github.com/elejke""><code>@​elejke</code></a>]</li>
+<li>Only import numpy when necessary <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5323"">#5323</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Fixed linear_gradient and radial_gradient I and F modes <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5274"">#5274</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Add support for reading TIFFs with PlanarConfiguration=2  <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5364"">#5364</a> [<a href=""https://github.com/wiredfool""><code>@​wiredfool</code></a>]</li>
+<li>More OSS-Fuzz support <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5328"">#5328</a> [<a href=""https://github.com/wiredfool""><code>@​wiredfool</code></a>]</li>
+<li>Do not premultiply alpha when resizing with Image.NEAREST resampling <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5304"">#5304</a> [<a href=""https://github.com/nulano""><code>@​nulano</code></a>]</li>
+<li>Use quantization method attributes <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5353"">#5353</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Dynamically link FriBiDi instead of Raqm <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5062"">#5062</a> [<a href=""https://github.com/nulano""><code>@​nulano</code></a>]</li>
+<li>Removed build_distance_tables return value <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5363"">#5363</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Allow fewer PNG palette entries than the bit depth maximum when saving <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5330"">#5330</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Use duration from info dictionary when saving WebP <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5338"">#5338</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Improved efficiency when creating GIF disposal images <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5326"">#5326</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Stop flattening EXIF IFD into getexif() <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/4947"">#4947</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Replaced tiff_deflate with tiff_adobe_deflate compression when saving TIFF images <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5343"">#5343</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Save ICC profile from TIFF encoderinfo <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5321"">#5321</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Moved RGB fix inside ImageQt class <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5268"">#5268</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Fix -Wformat error in TiffDecode <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5305"">#5305</a> [<a href=""https://github.com/lukegb""><code>@​lukegb</code></a>]</li>
+<li>Allow alpha_composite destination to be negative <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5313"">#5313</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Ensure file is closed if it is opened by ImageQt.ImageQt <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5260"">#5260</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Added ImageDraw rounded_rectangle method <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5208"">#5208</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Added IPythonViewer <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5289"">#5289</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Only draw each rectangle outline pixel once <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5183"">#5183</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Use mmap instead of built-in Win32 mapper <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5224"">#5224</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Handle PCX images with an odd stride <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5214"">#5214</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+<li>Only read different sizes for &quot;Large Thumbnail&quot; MPO frames <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5168"">#5168</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+</ul>
+<h2>Dependencies</h2>
+<ul>
+<li>Updated harfbuzz to 2.8.0 <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5334"">#5334</a> [<a href=""https://github.com/radarhere""><code>@​radarhere</code></a>]</li>
+</ul>
+<h2>Deprecations</h2>
+<!-- raw HTML omitted -->
+</blockquote>
+<p>... (truncated)</p>
+</details>
+<details>
+<summary>Changelog</summary>
+<p><em>Sourced from <a href=""https://github.com/python-pillow/Pillow/blob/master/CHANGES.rst"">pillow's changelog</a>.</em></p>
+<blockquote>
+<h2>8.2.0 (2021-04-01)</h2>
+<ul>
+<li>
+<p>Added getxmp() method <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5144"">#5144</a>
+[UrielMaD, radarhere]</p>
+</li>
+<li>
+<p>Add ImageShow support for GraphicsMagick <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5349"">#5349</a>
+[latosha-maltba, radarhere]</p>
+</li>
+<li>
+<p>Do not load transparent pixels from subsequent GIF frames <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5333"">#5333</a>
+[zewt, radarhere]</p>
+</li>
+<li>
+<p>Use LZW encoding when saving GIF images <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5291"">#5291</a>
+[raygard]</p>
+</li>
+<li>
+<p>Set all transparent colors to be equal in quantize() <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5282"">#5282</a>
+[radarhere]</p>
+</li>
+<li>
+<p>Allow PixelAccess to use Python <strong>int</strong> when parsing x and y <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5206"">#5206</a>
+[radarhere]</p>
+</li>
+<li>
+<p>Removed Image._MODEINFO <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5316"">#5316</a>
+[radarhere]</p>
+</li>
+<li>
+<p>Add preserve_tone option to autocontrast <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5350"">#5350</a>
+[elejke, radarhere]</p>
+</li>
+<li>
+<p>Fixed linear_gradient and radial_gradient I and F modes <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5274"">#5274</a>
+[radarhere]</p>
+</li>
+<li>
+<p>Add support for reading TIFFs with PlanarConfiguration=2 <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5364"">#5364</a>
+[kkopachev, wiredfool, nulano]</p>
+</li>
+<li>
+<p>Deprecated categories <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5351"">#5351</a>
+[radarhere]</p>
+</li>
+<li>
+<p>Do not premultiply alpha when resizing with Image.NEAREST resampling <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5304"">#5304</a>
+[nulano]</p>
+</li>
+<li>
+<p>Dynamically link FriBiDi instead of Raqm <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5062"">#5062</a>
+[nulano]</p>
+</li>
+<li>
+<p>Allow fewer PNG palette entries than the bit depth maximum when saving <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5330"">#5330</a>
+[radarhere]</p>
+</li>
+<li>
+<p>Use duration from info dictionary when saving WebP <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5338"">#5338</a>
+[radarhere]</p>
+</li>
+<li>
+<p>Stop flattening EXIF IFD into getexif() <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/4947"">#4947</a>
+[radarhere, kkopachev]</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+</blockquote>
+<p>... (truncated)</p>
+</details>
+<details>
+<summary>Commits</summary>
+<ul>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/e0e353c0ef7516979a9aedce3792596649ce4433""><code>e0e353c</code></a> 8.2.0 version bump</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/ee635befc6497f1c6c4fdb58c232e62d922ec8b7""><code>ee635be</code></a> Merge pull request <a href=""https://github-redirect.dependabot.com/python-pillow/Pillow/issues/5377"">#5377</a> from hugovk/security-and-release-notes</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/694c84f88f4299319bac49b20bd9baae82ca41b8""><code>694c84f</code></a> Fix typo [ci skip]</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/8febdad8dd51ad5c75a1db78492973588c7cbf6b""><code>8febdad</code></a> Review, typos and lint</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/fea419665b75f11910e44cfe6f89622fda63e78b""><code>fea4196</code></a> Reorder, roughly alphabetic</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/496245aa4365d0827390bd0b6fbd11287453b3a1""><code>496245a</code></a> Fix BLP DOS -- CVE-2021-28678</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/22e9bee4ef225c0edbb9323f94c26cee0c623497""><code>22e9bee</code></a> Fix DOS in PSDImagePlugin -- CVE-2021-28675</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/ba65f0b08ee8b93195c3f3277820771f5b62aa52""><code>ba65f0b</code></a> Fix Memory DOS in ImageFont</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/bb6c11fb889e6c11b0ee122b828132ee763b5856""><code>bb6c11f</code></a> Fix FLI DOS -- CVE-2021-28676</li>
+<li><a href=""https://github.com/python-pillow/Pillow/commit/5a5e6db0abf4e7a638fb1b3408c4e495a096cb92""><code>5a5e6db</code></a> Fix EPS DOS on _open -- CVE-2021-28677</li>
+<li>Additional commits viewable in <a href=""https://github.com/python-pillow/Pillow/compare/3.4.2...8.2.0"">compare view</a></li>
+</ul>
+</details>
+<br />
+
+
+[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=pillow&package-manager=pip&previous-version=3.4.2&new-version=8.2.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+
+Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`.
+
+[//]: # (dependabot-automerge-start)
+[//]: # (dependabot-automerge-end)
+
+---
+
+<details>
+<summary>Dependabot commands and options</summary>
+<br />
+
+You can trigger Dependabot actions by commenting on this PR:
+- `@dependabot rebase` will rebase this PR
+- `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it
+- `@dependabot merge` will merge this PR after your CI passes on it
+- `@dependabot squash and merge` will squash and merge this PR after your CI passes on it
+- `@dependabot cancel merge` will cancel a previously requested merge and block automerging
+- `@dependabot reopen` will reopen this PR if it is closed
+- `@dependabot close` will close this PR and stop Dependabot recreating it. You can achieve the same result by closing it manually
+- `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself)
+- `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself)
+- `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself)
+- `@dependabot use these labels` will set the current labels as the default for future PRs for this repo and language
+- `@dependabot use these reviewers` will set the current reviewers as the default for future PRs for this repo and language
+- `@dependabot use these assignees` will set the current assignees as the default for future PRs for this repo and language
+- `@dependabot use this milestone` will set the current milestone as the default for future PRs for this repo and language
+
+You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/jakevdp/PythonDataScienceHandbook/network/alerts).
+
+</details>",0
+Probabilistic-Programming-and-Bayesian-Methods-for-Hackers,CamDavidsonPilon,528,nhkhoi91,Change trace code due to update in PyMC library,2021-07-31T14:34:51Z,,0
+spaCy,explosion,8950,github-actions[bot],Auto-format code with black,2021-08-13T08:08:53Z,_This PR is auto-generated._,0
+ML-From-Scratch,eriklindernoren,95,m-abdollahi,Add 4 Normalizing methods for data preprocessing and update Readme.md,2021-06-28T14:08:13Z,"Add 4 Normalizing methods (MinMaxScaler,MaxAbsScale, StandardScaler, StandardScaler with selective mean and variance) for data preprocessing including add 1 newfolder + 5 py files and update Readme.md",0
+go,datasciencemasters,187,shravanthcs,test,2021-04-18T10:45:11Z,test,0
+ipython,ipython,13088,martinRenou,Improve error tracebacks so that it shows the cell prompts [2] ,2021-08-12T09:57:47Z,"Follow up on this PR #13043 which adds support for SyntaxError tracebacks as well:
+
+```python
+In [1]: def foo
+  In [1], line 1
+    def foo
+           ^
+SyntaxError: invalid syntax
+```",0
+ipython,ipython,13088,martinRenou,Improve error tracebacks so that it shows the cell prompts [2] ,2021-08-12T10:21:14Z,cc. @MrMino,1
+Virgilio,virgili0,159,wang7x,Fix a broken link in what-do-i-need-for-ml.md,2021-05-25T09:06:18Z,Fix a broken link in what-do-i-need-for-ml.md,0
+dash,plotly,1711,dependabot[bot],Bump path-parse from 1.0.6 to 1.0.7 in /@plotly/eslint-config-dash,2021-08-13T01:23:06Z,"Bumps [path-parse](https://github.com/jbgutierrez/path-parse) from 1.0.6 to 1.0.7.
+<details>
+<summary>Commits</summary>
+<ul>
+<li>See full diff in <a href=""https://github.com/jbgutierrez/path-parse/commits/v1.0.7"">compare view</a></li>
+</ul>
+</details>
+<br />
+
+
+[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=path-parse&package-manager=npm_and_yarn&previous-version=1.0.6&new-version=1.0.7)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+
+Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`.
+
+[//]: # (dependabot-automerge-start)
+[//]: # (dependabot-automerge-end)
+
+---
+
+<details>
+<summary>Dependabot commands and options</summary>
+<br />
+
+You can trigger Dependabot actions by commenting on this PR:
+- `@dependabot rebase` will rebase this PR
+- `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it
+- `@dependabot merge` will merge this PR after your CI passes on it
+- `@dependabot squash and merge` will squash and merge this PR after your CI passes on it
+- `@dependabot cancel merge` will cancel a previously requested merge and block automerging
+- `@dependabot reopen` will reopen this PR if it is closed
+- `@dependabot close` will close this PR and stop Dependabot recreating it. You can achieve the same result by closing it manually
+- `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself)
+- `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself)
+- `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself)
+- `@dependabot use these labels` will set the current labels as the default for future PRs for this repo and language
+- `@dependabot use these reviewers` will set the current reviewers as the default for future PRs for this repo and language
+- `@dependabot use these assignees` will set the current assignees as the default for future PRs for this repo and language
+- `@dependabot use this milestone` will set the current milestone as the default for future PRs for this repo and language
+
+You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/plotly/dash/network/alerts).
+
+</details>",0
+ray,ray-project,17813,simon-mo,[Doc] Update macos nightly wheel names,2021-08-13T06:43:39Z,Buildkite wheels are updated to macos_10_15 instead of 13,0
+gensim,RaRe-Technologies,3209,tbbharaj,Fix aarch64 wheels,2021-08-02T22:03:37Z,"This PR addresses the issue to build aarch64 wheels.
+Travis build for Python 3.9 is failing because it couldn't find matching scipy distribution == 1.5.3. This issue is being addressed in this PR.
+
+If there are any questions/comments - I'd be happy fix things as needed.
+
+Thank you
+Tanveen",0
+gensim,RaRe-Technologies,3209,piskvorky,Fix aarch64 wheels,2021-08-03T07:14:59Z,"Thanks! Shouldn't these versions match `setup.py` though?
+
+I forgot what exactly needs to be updated where, so everything's in sync… @mpenkov could you please summarize the way we update dependencies across the different files / subsystems in [Gensim & Compatibility](https://github.com/RaRe-Technologies/gensim/wiki/Gensim-And-Compatibility).",1
+gensim,RaRe-Technologies,3209,tbbharaj,Fix aarch64 wheels,2021-08-10T23:35:08Z,"> Thanks! Shouldn't these versions match `setup.py` though?
+> 
+> I forgot what exactly needs to be updated where, so everything's in sync… @mpenkov could you please summarize the way we update dependencies across the different files / subsystems in [Gensimi & Compatibility](https://github.com/RaRe-Technologies/gensim/wiki/Gensim-And-Compatibility)
+
+Thank you @piskvorky for reviewing my PR.
+[setup.py](https://github.com/RaRe-Technologies/gensim/blob/develop/setup.py#L328) defines `'scipy >= 0.18.1'`, this should be okay with existing changes in PR isn't?
+
+Also `scipy==1.5.3` doesn't have build for [Python 3.9](https://pypi.org/project/scipy/1.5.3/#files), therefore for Python 3.6 scipy is configured as `scipy==1.5.3` and [1.7.0 ](https://pypi.org/project/scipy/1.7.0/#files)for others which is latest",1
+python-machine-learning-book,rasbt,90,AliHaider20,Update .gitignore,2020-10-16T04:50:43Z,,0
+dive-into-machine-learning,hangtwenty,136,itko,Add links to browser-based tools,2021-05-16T00:46:39Z,"I added links to examples of browser-based notebooks. As someone who struggled with installing Python and Jupyter when I just got started, browser-based was a great way for me to get started without getting into the weeds of setting up my environment properly.",0
+Awesome-pytorch-list,bharathgs,115,BIGBALLON,Add Distribuuu,2021-03-12T17:02:21Z,"Distribuuuu is a Distributed Classification Training Framework powered by native PyTorch.
+",0
+tflearn,tflearn,1163,huntr-helper,Security Fix for Arbitrary Code Execution - huntr.dev,2021-01-25T09:41:57Z,"https://huntr.dev/users/Anon-Artist has fixed the Arbitrary Code Execution vulnerability 🔨. Think you could fix a vulnerability like this?
+
+Get involved at https://huntr.dev/
+
+Q | A
+Version Affected | ALL
+Bug Fix | YES
+Original Pull Request | https://github.com/418sec/tflearn/pull/1
+Vulnerability README | https://github.com/418sec/huntr/blob/master/bounties/pip/tflearn/1/README.md
+
+### User Comments:
+
+### :bar_chart: Metadata *
+
+TFlearn is a modular and transparent deep learning library built on top of Tensorflow. It was designed to provide a higher-level API to TensorFlow in order to facilitate and speed-up experimentations, while remaining fully transparent and compatible with it. This package was vulnerable to Arbitrary Code Execution.
+
+#### Bounty URL: https://www.huntr.dev/bounties/1-pip-tflearn
+
+### :gear: Description *
+
+load_batch() function is used to load CIFAR 10 dataset for training. Lack of restriction in input allowes attacker-crafted file to get unpickled which causes code execution.
+
+### :computer: Technical Description *
+
+Fixed by avoiding unsafe loader.
+
+### :bug: Proof of Concept (PoC) *
+
+Create the following PoC file:
+exploit.py
+
+```
+import pickle
+import os
+import nevergrad
+from ray.tune.suggest.nevergrad import NevergradSearch
+
+class EvilPickle(object):
+    def __reduce__(self):
+        return (os.system, ('calc.exe', ))
+
+payload = pickle.dumps(EvilPickle())
+optimizer = nevergrad.optimization.Optimizer(1)
+ngSearch = NevergradSearch(optimizer)
+
+with open('payload', 'wb') as f:
+    f.write(payload)
+
+ngSearch.restore('payload')
+
+```
+
+Execute the following commands in another terminal:
+
+```
+python3 exploit.py
+```
+
+    Check the Output:
+
+xcalc will pop up.
+
+### :fire: Proof of Fix (PoF) *
+
+After fix it will not popup a calc.
+
+### :+1: User Acceptance Testing (UAT)
+
+After fix functionality is unaffected.
+",0
+awesome-bigdata,onurakpolat,306,zackkhan,added Hightouch to Data Ingestion section,2021-08-07T00:39:51Z,Added https://hightouch.io/ to Data Ingestion section,0
+allennlp,allenai,5357,dependabot[bot],"Update google-cloud-storage requirement from <1.42.0,>=1.38.0 to >=1.38.0,<1.43.0",2021-08-12T13:03:03Z,"Updates the requirements on [google-cloud-storage](https://github.com/googleapis/python-storage) to permit the latest version.
+<details>
+<summary>Release notes</summary>
+<p><em>Sourced from <a href=""https://github.com/googleapis/python-storage/releases"">google-cloud-storage's releases</a>.</em></p>
+<blockquote>
+<h2>v1.42.0</h2>
+<h3>Features</h3>
+<ul>
+<li>add 'page_size' parameter to 'Bucket.list_blobs, list_buckets (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/520"">#520</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/c5f4ad8fddd1849a4229b0126c4c022bccb90128"">c5f4ad8</a>)</li>
+</ul>
+<h3>Bug Fixes</h3>
+<ul>
+<li><strong>deps:</strong> add explicit ranges for 'google-api-core' and 'google-auth' (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/530"">#530</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/310f207411da0382af310172344f19c644c14e6a"">310f207</a>)</li>
+<li>downloading no longer marks metadata fields as 'changed' (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/523"">#523</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/160d1ecb41f1f269b25cb68b2d2f7daf418bf01c"">160d1ec</a>)</li>
+<li>make 'requests.exceptions.ChunkedEncodingError retryable by default (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/526"">#526</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/4abb40310eca7ec45afc4bc5e4dfafbe083e74d2"">4abb403</a>)</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li>update supported / removed Python versions in README (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/519"">#519</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/1f1b138865fb171535ee0cf768aff1987ed58914"">1f1b138</a>)</li>
+</ul>
+</blockquote>
+</details>
+<details>
+<summary>Changelog</summary>
+<p><em>Sourced from <a href=""https://github.com/googleapis/python-storage/blob/master/CHANGELOG.md"">google-cloud-storage's changelog</a>.</em></p>
+<blockquote>
+<h2><a href=""https://www.github.com/googleapis/python-storage/compare/v1.41.1...v1.42.0"">1.42.0</a> (2021-08-05)</h2>
+<h3>Features</h3>
+<ul>
+<li>add 'page_size' parameter to 'Bucket.list_blobs, list_buckets (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/520"">#520</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/c5f4ad8fddd1849a4229b0126c4c022bccb90128"">c5f4ad8</a>)</li>
+</ul>
+<h3>Bug Fixes</h3>
+<ul>
+<li><strong>deps:</strong> add explicit ranges for 'google-api-core' and 'google-auth' (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/530"">#530</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/310f207411da0382af310172344f19c644c14e6a"">310f207</a>)</li>
+<li>downloading no longer marks metadata fields as 'changed' (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/523"">#523</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/160d1ecb41f1f269b25cb68b2d2f7daf418bf01c"">160d1ec</a>)</li>
+<li>make 'requests.exceptions.ChunkedEncodingError retryable by default (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/526"">#526</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/4abb40310eca7ec45afc4bc5e4dfafbe083e74d2"">4abb403</a>)</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li>update supported / removed Python versions in README (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/519"">#519</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/1f1b138865fb171535ee0cf768aff1987ed58914"">1f1b138</a>)</li>
+</ul>
+<h3><a href=""https://www.github.com/googleapis/python-storage/compare/v1.41.0...v1.41.1"">1.41.1</a> (2021-07-20)</h3>
+<h3>Bug Fixes</h3>
+<ul>
+<li><strong>deps:</strong> pin <code>{api,cloud}-core</code>, <code>auth</code> to allow 2.x versions on Python 3 (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/512"">#512</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/4d7500e39c51efd817b8363b69c88be040f3edb8"">4d7500e</a>)</li>
+<li>remove trailing commas from error message constants (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/505"">#505</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/d4a86ceb7a7c5e00ba7bae37c7078d52478040ff"">d4a86ce</a>), closes <a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/501"">#501</a></li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li>replace usage of deprecated function <code>download_as_string</code> in docs (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/508"">#508</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/8dfa4d429dce94b671dc3e3755e52ab82733f61a"">8dfa4d4</a>)</li>
+</ul>
+<h2><a href=""https://www.github.com/googleapis/python-storage/compare/v1.40.0...v1.41.0"">1.41.0</a> (2021-07-13)</h2>
+<h3>Features</h3>
+<ul>
+<li>add support for Etag headers on reads (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/489"">#489</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/741d3fda4e4280022cede29ebeb7c2ea09e73b6f"">741d3fd</a>)</li>
+</ul>
+<h3>Bug Fixes</h3>
+<ul>
+<li><strong>deps:</strong> update minimum dependency versions to pick up bugfixes (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/496"">#496</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/92251a5c8ea4d663773506eb1c630201a657aa69"">92251a5</a>), closes <a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/494"">#494</a></li>
+<li>populate etag / generation / metageneration properties during download (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/488"">#488</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/49ba14c9c47dbe6bc2bb45d53bbe5621c131fbcb"">49ba14c</a>)</li>
+<li>revise and rename is_etag_in_json(data) (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/483"">#483</a>) (<a href=""https://www.github.com/googleapis/python-storage/commit/0a5254647bf1155874fe48f3891bcc34a76b0b81"">0a52546</a>)</li>
+</ul>
+<h2><a href=""https://www.github.com/googleapis/python-storage/compare/v1.39.0...v1.40.0"">1.40.0</a> (2021-06-30)</h2>
+<h3>Features</h3>
+<!-- raw HTML omitted -->
+</blockquote>
+<p>... (truncated)</p>
+</details>
+<details>
+<summary>Commits</summary>
+<ul>
+<li><a href=""https://github.com/googleapis/python-storage/commit/fcf9a07a49250886f7baba04a8399286e6a5f13b""><code>fcf9a07</code></a> chore: release 1.42.0 (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/522"">#522</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/310f207411da0382af310172344f19c644c14e6a""><code>310f207</code></a> fix(deps): add explicit ranges for 'google-api-core' and 'google-auth' (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/530"">#530</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/ef41bc1a744d5d65961dd5c7c3a4e04b353ef7ae""><code>ef41bc1</code></a> chore: require CODEOWNER review and up to date branches (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/531"">#531</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/4abb40310eca7ec45afc4bc5e4dfafbe083e74d2""><code>4abb403</code></a> fix: make 'requests.exceptions.ChunkedEncodingError retryable by default (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/526"">#526</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/aefe1987248e564dca493805229694df93a77505""><code>aefe198</code></a> chore: fix kokoro config for samples (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/524"">#524</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/160d1ecb41f1f269b25cb68b2d2f7daf418bf01c""><code>160d1ec</code></a> fix: downloading no longer marks metadata fields as 'changed' (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/523"">#523</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/c5f4ad8fddd1849a4229b0126c4c022bccb90128""><code>c5f4ad8</code></a> feat: add 'page_size' parameter to 'Bucket.list_blobs, list_buckets (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/520"">#520</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/1f1b138865fb171535ee0cf768aff1987ed58914""><code>1f1b138</code></a> docs: update supported / removed Python versions in README (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/519"">#519</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/24ea536b1c67deec09770bddc0008c57994f0408""><code>24ea536</code></a> tests: use 120 sec timeout for 'blob.delete' during teardown (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/518"">#518</a>)</li>
+<li><a href=""https://github.com/googleapis/python-storage/commit/521e2bf45cce380b7b22888092383ab2a5a0287b""><code>521e2bf</code></a> chore: release 1.41.1 (<a href=""https://github-redirect.dependabot.com/googleapis/python-storage/issues/509"">#509</a>)</li>
+<li>Additional commits viewable in <a href=""https://github.com/googleapis/python-storage/compare/v1.38.0...v1.42.0"">compare view</a></li>
+</ul>
+</details>
+<br />
+
+
+Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`.
+
+[//]: # (dependabot-automerge-start)
+[//]: # (dependabot-automerge-end)
+
+---
+
+<details>
+<summary>Dependabot commands and options</summary>
+<br />
+
+You can trigger Dependabot actions by commenting on this PR:
+- `@dependabot rebase` will rebase this PR
+- `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it
+- `@dependabot merge` will merge this PR after your CI passes on it
+- `@dependabot squash and merge` will squash and merge this PR after your CI passes on it
+- `@dependabot cancel merge` will cancel a previously requested merge and block automerging
+- `@dependabot reopen` will reopen this PR if it is closed
+- `@dependabot close` will close this PR and stop Dependabot recreating it. You can achieve the same result by closing it manually
+- `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself)
+- `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself)
+- `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself)
+
+
+</details>",0
+keras,keras-team,15254,copybara-service[bot],"Fix error message for `sparse` setting in IndexLookup layer when `output_mode = ""int""`.",2021-08-25T22:20:43Z,"Fix error message for `sparse` setting in IndexLookup layer when `output_mode = ""int""`.
+",0
+scikit-learn,scikit-learn,20851,baam25simo,[WIP] DOC Ensures that FeatureAgglomeration passes numpydoc validation,2021-08-26T15:31:39Z,"#### Reference Issues/PRs
+
+Addresses #20308 
+
+
+#### What does this implement/fix? Explain your changes.
+
+- `FeatureAgglomeration` removed from `DOCSTRING_IGNORE_LIST` in test_docstrings.py
+- In `FeatureAgglomeration` : ""See Also"" section added.
+- In `FeatureAgglomeration.fit` : `**params` parameter description added, self description added.
+- In `AgglomerationTransform.inverse_transform` : summary modified.
+- In `AgglomerationTransform`.transform : summary modified.
+
+
+#### Any other comments?
+
+Running `pytest maint_tools/test_docstrings.py -k FeatureAgglomeration-` in this branch I obtain:
+
+```
+====================================== test session starts ======================================
+platform linux -- Python 3.8.5, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: /.../.../scikit-learn, configfile: setup.cfg
+plugins: cov-2.12.1, anyio-2.2.0
+collected 1760 items / 1752 deselected / 8 selected                                             
+
+maint_tools/test_docstrings.py ..F.....                                                   [100%]
+
+=========================================== FAILURES ============================================
+_______________________ test_docstring[FeatureAgglomeration-fit_predict] ________________________
+
+Estimator = <class 'sklearn.cluster._agglomerative.FeatureAgglomeration'>, method = 'fit_predict'
+request = <FixtureRequest for <Function test_docstring[FeatureAgglomeration-fit_predict]>>
+
+    @pytest.mark.parametrize(""Estimator, method"", get_all_methods())
+    def test_docstring(Estimator, method, request):
+        base_import_path = Estimator.__module__
+        import_path = [base_import_path, Estimator.__name__]
+        if method is not None:
+            import_path.append(method)
+    
+        import_path = ""."".join(import_path)
+    
+        if Estimator.__name__ in DOCSTRING_IGNORE_LIST:
+            request.applymarker(
+                pytest.mark.xfail(run=False, reason=""TODO pass numpydoc validation"")
+            )
+    
+        res = numpydoc_validation.validate(import_path)
+    
+        res[""errors""] = list(filter_errors(res[""errors""], method, Estimator=Estimator))
+    
+        if res[""errors""]:
+            msg = repr_errors(res, Estimator, method)
+    
+>           raise ValueError(msg)
+E           ValueError: 
+E           
+E           None
+E           
+E           FeatureAgglomeration.fit_predict
+E           Parsing of the method signature failed, possibly because this is a property.
+E           
+E           Fit the hierarchical clustering from features or distance matrix,
+E           and return cluster labels.
+E           
+E           Parameters
+E           ----------
+E           X : array-like of shape (n_samples, n_features) or                 (n_samples, n_samples)
+E               Training instances to cluster, or distances between instances if
+E               ``affinity='precomputed'``.
+E           
+E           y : Ignored
+E               Not used, present here for API consistency by convention.
+E           
+E           Returns
+E           -------
+E           labels : ndarray of shape (n_samples,)
+E               Cluster labels.
+E           
+E           # Errors
+E           
+E            - GL08: The object does not have a docstring
+
+maint_tools/test_docstrings.py:252: ValueError
+========================= 1 failed, 7 passed, 1752 deselected in 1.03s ==========================
+
+```
+
+which I was not able to solve. Any suggestions?
+
+Thank you!
+",0
+scikit-learn,scikit-learn,20851,baam25simo,[WIP] DOC Ensures that FeatureAgglomeration passes numpydoc validation,2021-08-26T16:00:01Z,"Found out that
+`AgglomerativeClustering.fit_predict()` returns `super().fit_predict(X, y)`
+which is `ClusterMixin.fit_predict()` which returns `self.labels_` 
+which is actually an instance constant declared in _agglomerative.py lines 976-982
+
+Can numpydoc validation be considered passed?",1
+keras,keras-team,15254,copybara-service[bot],"Fix error message for `sparse` setting in IndexLookup layer when `output_mode = ""int""`.",2021-08-25T22:20:43Z,"Fix error message for `sparse` setting in IndexLookup layer when `output_mode = ""int""`.
+",0
+scikit-learn,scikit-learn,20851,baam25simo,[WIP] DOC Ensures that FeatureAgglomeration passes numpydoc validation,2021-08-26T15:31:39Z,"#### Reference Issues/PRs
+
+Addresses #20308 
+
+
+#### What does this implement/fix? Explain your changes.
+
+- `FeatureAgglomeration` removed from `DOCSTRING_IGNORE_LIST` in test_docstrings.py
+- In `FeatureAgglomeration` : ""See Also"" section added.
+- In `FeatureAgglomeration.fit` : `**params` parameter description added, self description added.
+- In `AgglomerationTransform.inverse_transform` : summary modified.
+- In `AgglomerationTransform`.transform : summary modified.
+
+
+#### Any other comments?
+
+Running `pytest maint_tools/test_docstrings.py -k FeatureAgglomeration-` in this branch I obtain:
+
+```
+====================================== test session starts ======================================
+platform linux -- Python 3.8.5, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: /.../.../scikit-learn, configfile: setup.cfg
+plugins: cov-2.12.1, anyio-2.2.0
+collected 1760 items / 1752 deselected / 8 selected                                             
+
+maint_tools/test_docstrings.py ..F.....                                                   [100%]
+
+=========================================== FAILURES ============================================
+_______________________ test_docstring[FeatureAgglomeration-fit_predict] ________________________
+
+Estimator = <class 'sklearn.cluster._agglomerative.FeatureAgglomeration'>, method = 'fit_predict'
+request = <FixtureRequest for <Function test_docstring[FeatureAgglomeration-fit_predict]>>
+
+    @pytest.mark.parametrize(""Estimator, method"", get_all_methods())
+    def test_docstring(Estimator, method, request):
+        base_import_path = Estimator.__module__
+        import_path = [base_import_path, Estimator.__name__]
+        if method is not None:
+            import_path.append(method)
+    
+        import_path = ""."".join(import_path)
+    
+        if Estimator.__name__ in DOCSTRING_IGNORE_LIST:
+            request.applymarker(
+                pytest.mark.xfail(run=False, reason=""TODO pass numpydoc validation"")
+            )
+    
+        res = numpydoc_validation.validate(import_path)
+    
+        res[""errors""] = list(filter_errors(res[""errors""], method, Estimator=Estimator))
+    
+        if res[""errors""]:
+            msg = repr_errors(res, Estimator, method)
+    
+>           raise ValueError(msg)
+E           ValueError: 
+E           
+E           None
+E           
+E           FeatureAgglomeration.fit_predict
+E           Parsing of the method signature failed, possibly because this is a property.
+E           
+E           Fit the hierarchical clustering from features or distance matrix,
+E           and return cluster labels.
+E           
+E           Parameters
+E           ----------
+E           X : array-like of shape (n_samples, n_features) or                 (n_samples, n_samples)
+E               Training instances to cluster, or distances between instances if
+E               ``affinity='precomputed'``.
+E           
+E           y : Ignored
+E               Not used, present here for API consistency by convention.
+E           
+E           Returns
+E           -------
+E           labels : ndarray of shape (n_samples,)
+E               Cluster labels.
+E           
+E           # Errors
+E           
+E            - GL08: The object does not have a docstring
+
+maint_tools/test_docstrings.py:252: ValueError
+========================= 1 failed, 7 passed, 1752 deselected in 1.03s ==========================
+
+```
+
+which I was not able to solve. Any suggestions?
+
+Thank you!
+",0
+scikit-learn,scikit-learn,20851,baam25simo,[WIP] DOC Ensures that FeatureAgglomeration passes numpydoc validation,2021-08-26T16:00:01Z,"Found out that
+`AgglomerativeClustering.fit_predict()` returns `super().fit_predict(X, y)`
+which is `ClusterMixin.fit_predict()` which returns `self.labels_` 
+which is actually an instance constant declared in _agglomerative.py lines 976-982
+
+Can numpydoc validation be considered passed?",1
